@@ -26,10 +26,10 @@ void sender(int connection) {
     while (true) {
         string toSend;
         getline(cin, toSend);
-        send(connection,	//socket file descriptor
+        send(connection,    //socket file descriptor
             toSend.c_str(), //message to send
-            toSend.size(),	//size of message
-            0				//flags (none yet)
+            toSend.size(),    //size of message
+            0                //flags (none yet)
         );
     }
 }
@@ -38,10 +38,10 @@ void reciever(int connection) {
     char buf[4096];
     while (true) {
         size_t bytesWritten = recv(
-            connection,		//socket file descriptor
-            buf,			//buffer to put data in
+            connection,        //socket file descriptor
+            buf,            //buffer to put data in
             sizeof(buf) - 1,//max amount of data to read
-            0				//flags
+            0                //flags
         );
 
         buf[bytesWritten] = 0;
@@ -56,15 +56,15 @@ int main(int argc, char* argv[])
     bool isServer = argc <= 1;
 
     auto sock = socket(AF_INET, SOCK_STREAM, 0); /* Open a TCP connection (SOCK_STREAM)
-                                                    Over the internet (AF_INET)	
+                                                    Over the internet (AF_INET)    
                                                  */
 
-    int yes = 1;										 // These lines allow the port to be reused
+    int yes = 1;                                         // These lines allow the port to be reused
     setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, &yes, 4); // otherwise, dying processes are annoying
 
     sockaddr_in addr; //structure will define how we connect
     addr.sin_family = AF_INET;
-    addr.sin_port = htons(port); /*	have to switch byte ordering to big_endian
+    addr.sin_port = htons(port); /*    have to switch byte ordering to big_endian
                                     htons = "host to network short"
                                  */
 
@@ -108,9 +108,9 @@ int main(int argc, char* argv[])
 
         //open a connection to the server
         connect(
-            sock,				//file descriptor (since we're connecting we only get one socket FD)
-            (sockaddr*)&addr,	//the structure defining the IP and port we're connecting to
-            sizeof(addr)		//the size of said structure
+            sock,                //file descriptor (since we're connecting we only get one socket FD)
+            (sockaddr*)&addr,    //the structure defining the IP and port we're connecting to
+            sizeof(addr)        //the size of said structure
         );
 
         sender(sock);
