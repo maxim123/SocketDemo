@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
                                                  */
 
     int yes = 1;                                         // These lines allow the port to be reused
-    setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, &yes, 4); // otherwise, dying processes are annoying
+    setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes)); // otherwise, dying processes are annoying
 
     sockaddr_in addr; //structure will define how we connect
     addr.sin_family = AF_INET;
